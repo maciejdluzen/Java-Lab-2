@@ -14,10 +14,18 @@ public class MainClass {
         Person person1 = new Person("Maciej", "Dłużeń");
         Person person2 = new Person("Jan", "Kowalski");
 
+        System.out.println(rooms.size());
+
+        System.out.println(rooms);
+
         System.out.println(hotel.rentRoom(rooms, person1));
         System.out.println(hotel.rentRoom(rooms, person2));
 
-        System.out.println(hotel.doesAPersonRentARoom(rooms, "Dłużeń"));
+        hotel.vacateRoom(rooms, "Kowalski");
+
+        System.out.println(rooms);
+
+        System.out.println(hotel.doesAPersonRentARoom(rooms, "Kowalski"));
 
         System.out.println(hotel.isAnyRoomAvailable(rooms));
     }

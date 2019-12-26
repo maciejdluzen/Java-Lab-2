@@ -35,10 +35,12 @@ public class Hotel {
     // Metoda tworząca wszystkie pokoje w hotelu (na razie bez ludzi)
     public List<RoomNumber> prepareAllHotelRooms(Hotel hotel) {
         List<RoomNumber> rooms = new ArrayList<>();
-        for(int i = 1; i <= NUMBER_OF_ROOMS; i++) {
-            for(int j = 1; j <= hotel.getNumberOfFloors(); j++) {
-                for(int k = 1; k <= hotel.getRoomsPerFloor(); k++) {
-                    rooms.add(new RoomNumber(j, k));
+        for(int j = 1; j <= hotel.getNumberOfFloors(); j++) {
+            for(int k = 1; k <= hotel.getRoomsPerFloor(); k++) {
+                rooms.add(new RoomNumber(j, k));
+                if (j * k > NUMBER_OF_ROOMS) {
+                    System.out.println("Iloraz liczby pięter oraz pokoi na pietrze, przekracza maksymalną założoną liczbę pokoi");
+                    break;
                 }
             }
         }
@@ -68,7 +70,8 @@ public class Hotel {
         return roomNumber;
     }
 
-    public boolean doesAPersonRentARoom(List <RoomNumber> rooms, String lastName) {
+    // Metoda sprawdzająca, czy osoba o podanym nazwisku wynajmuje jakiś pokój
+    public boolean doesAPersonRentARoom(List<RoomNumber> rooms, String lastName) {
         for(RoomNumber room : rooms) {
             try {
                 if(room.getPerson().getLastName().equals(lastName)) {
@@ -79,5 +82,18 @@ public class Hotel {
             }
         }
         return false;
+    }
+
+    // Metoda zwalniająca pokój, zajmowany przez osobę o podanym nazwisku
+    public void vacateRoom(List<RoomNumber> rooms, String lastName) {
+        for(RoomNumber room : rooms) {
+            try {
+                if (room.getPerson().getLastName().equals(lastName)) {
+                    room.setPerson(null);
+                }
+            } catch (NullPointerException e) {
+                continue;
+            }
+        }
     }
 }
